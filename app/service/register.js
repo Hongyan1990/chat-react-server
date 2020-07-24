@@ -1,6 +1,7 @@
 'use strict';
 
 const Service = require('egg').Service;
+const utils = require('utility');
 
 class RegisterService extends Service {
   async index(data) {
@@ -22,7 +23,11 @@ class RegisterService extends Service {
         msg: '服务出错了',
       };
     }
-    console.log(res)
+    console.log(res);
+    this.ctx.cookies.set('userToken', res.insertId, {
+      maxAge: 24 * 3600 * 1000,
+      httpOnly: false,
+    });
     return {
       code: 0,
       data: {
