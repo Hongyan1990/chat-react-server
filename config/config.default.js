@@ -54,5 +54,8 @@ module.exports = appInfo => {
     ...userConfig,
     mysql,
     security,
+    // assets: {
+    //   publicPath: '/public/',
+    // },
   };
 };

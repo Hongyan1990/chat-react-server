@@ -15,7 +15,7 @@ class RegisterService extends Service {
     }
     let res;
     try {
-      res = await this.app.mysql.insert('users', { name, pwd, role });
+      res = await this.app.mysql.insert('users', { name, role, pwd: pwdMd5(pwd) });
     } catch (err) {
       console.log(err)
       return {
@@ -33,11 +33,14 @@ class RegisterService extends Service {
       data: {
         name,
         role,
+        id: res.insertId,
       },
     };
   }
 }
 
-// function pwdMd5(pwd) {}
+function pwdMd5(pwd) {
+  return utils.md5(utils.md5(pwd + '5568hxbc#*@&&fds'));
+}
 
 module.exports = RegisterService;
