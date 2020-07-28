@@ -5,19 +5,28 @@ const Service = require('egg').Service;
 class UserInfoService extends Service {
   async index(data) {
     try {
-      await this.app.mysql.update('user', data);
+      await this.app.mysql.update('users', data);
       return {
-        code: 0,
-        data: {
-          id: data.id,
-        },
+        id: data.id,
       };
     } catch (err) {
+      console.log(err)
       return {
-        code: -1,
         msg: '更新用户信息失败',
       };
     }
+  }
+  async createJob(data) {
+    const { publisher_id, title, salary, description, work_place } = data;
+    try {
+      const res = await this.app.mysql.insert('jobs', { publisher_id, title, salary, description, work_place });
+      console.log(res);
+    } catch (err) {
+      return {
+        msg: '服务出错了',
+      };
+    }
+    return {};
   }
 }
 
