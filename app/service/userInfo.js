@@ -29,6 +29,17 @@ class UserInfoService extends Service {
     }
     return {};
   }
+  async queryJobs(id) {
+    try {
+      // const jobs = await this.app.mysql.
+    } catch (err) {
+      console.log(err);
+      return {
+        code: -1,
+        msg: '服务出错了',
+      };
+    }
+  }
 }
 
 module.exports = UserInfoService;

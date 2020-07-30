@@ -14,13 +14,16 @@ class UserInfoController extends Controller {
         msg: data1.msg || data2.msg,
       };
     } else {
-      console.log(data1, data2)
       ctx.body = {
         code: 0,
         msg: '添加成功',
         data: {},
       };
     }
+  }
+  async list() {
+    const { ctx } = this;
+    const { id } = ctx.request.query;
 
   }
 }
