@@ -8,6 +8,8 @@ class UserInfoController extends Controller {
     const jsonData = ctx.request.body;
     const data1 = await ctx.service.userInfo.index(jsonData);
     const data2 = await ctx.service.userInfo.createJob(jsonData);
+    const data3 = await ctx.service.userInfo.queryUser(jsonData.publisher_id);
+    console.log(data3)
     if (data1.msg || data2.msg) {
       ctx.body = {
         code: -1,
@@ -17,14 +19,17 @@ class UserInfoController extends Controller {
       ctx.body = {
         code: 0,
         msg: '添加成功',
-        data: {},
+        data: {
+          role: data3.data ? data3.data.role : '',
+        },
       };
     }
   }
   async list() {
     const { ctx } = this;
-    const { id } = ctx.request.query;
-
+    const { id, role } = ctx.request.query;
+    const body = await ctx.service.userInfo.queryJobs(id, role);
+    ctx.body = body;
   }
 }
 

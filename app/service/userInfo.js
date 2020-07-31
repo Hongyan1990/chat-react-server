@@ -29,11 +29,35 @@ class UserInfoService extends Service {
     }
     return {};
   }
-  async queryJobs(id) {
+  async queryJobs(id, role) {
     try {
-      // const jobs = await this.app.mysql.
+      let jobs = [];
+      if (id) {
+        jobs = await this.app.mysql.query('select jobs.*, users.name, users.role, users.avatar from users, jobs where users.id=jobs.publisher_id and users.id=?', [ id ]);
+      } else if (role) {
+        jobs = await this.app.mysql.query('select jobs.*, users.name, users.role, users.avatar from users, jobs where users.id=jobs.publisher_id and users.role=?', [ role ]);
+      }
+      return {
+        code: 0,
+        data: jobs,
+      };
     } catch (err) {
       console.log(err);
+      return {
+        code: -1,
+        msg: '服务出错了',
+      };
+    }
+  }
+  async queryUser(id) {
+    try {
+      const user = await this.app.mysql.get('users', { id });
+      return {
+        code: 0,
+        data: user,
+      };
+    } catch (e) {
+      console.log(e);
       return {
         code: -1,
         msg: '服务出错了',
