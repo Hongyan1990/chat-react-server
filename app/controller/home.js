@@ -20,7 +20,10 @@ class HomeController extends Controller {
       ctx.body = {
         code: 0,
         data: {
-          userName: user.name,
+          name: user.name,
+          id: user.id,
+          role: user.role,
+          avatar: user.avatar,
         },
       };
     }
