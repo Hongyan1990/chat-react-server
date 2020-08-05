@@ -33,9 +33,9 @@ class UserInfoService extends Service {
     try {
       let jobs = [];
       if (id) {
-        jobs = await this.app.mysql.query('select jobs.*, users.name, users.role, users.avatar from users, jobs where users.id=jobs.publisher_id and users.id=?', [ id ]);
+        jobs = await this.app.mysql.query('select jobs.*, users.name, users.role, users.avatar from users, jobs where users.id=jobs.publisher_id and users.id=? order by created_at desc ', [ id ]);
       } else if (role) {
-        jobs = await this.app.mysql.query('select jobs.*, users.name, users.role, users.avatar from users, jobs where users.id=jobs.publisher_id and users.role=?', [ role ]);
+        jobs = await this.app.mysql.query('select jobs.*, users.name, users.role, users.avatar from users, jobs where users.id=jobs.publisher_id and users.role=?  order by created_at desc', [ role ]);
       }
       return {
         code: 0,
